@@ -1,6 +1,6 @@
 include irvine32.inc
 .data
-    resultMsg db "Result: %d", 0
+    resultMsg db "Result %d", 0
 
 .code
 main proc
