@@ -1,2 +1,3 @@
 D:\Downloads\Project32_VS2022\Project32_VS2022\Debug\Project.exe
 E:\python\vs code learn\assemb_working\Debug\Project.exe
+E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe

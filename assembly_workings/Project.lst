@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/23/23 00:40:58
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    11/06/23 19:00:48
 assemb_sec.asm						     Page 1 - 1
 
 
@@ -20,7 +20,10 @@ assemb_sec.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-
+ 00000000			.data
+ 00000000 52 65 73 75 6C	    resultMsg db "Result: %d", 0
+	   74 3A 20 25 64
+	   00
 
  00000000			.code
  00000000			main proc
@@ -30,15 +33,17 @@ assemb_sec.asm						     Page 1 - 1
  00000008  83 C0 05		    add eax, 5     ; eax = eax + 5
  0000000B  83 C0 04		    add eax, 4     ; eax = eax + 4
 
- 0000000E  E8 00000000 E	    call DumpRegs
+				    ; Display the result
+ 0000000E  8B D0		    mov edx, eax
+ 00000010  BB 00000000 R	    mov ebx, OFFSET resultMsg
+ 00000015  E8 00000000 E	    call WriteInt
 
 				    exit
- 00000013  6A 00	   *	    push   +000000000h
- 00000015  E8 00000000 E   *	    call   ExitProcess
- 0000001A			main endp
-
+ 0000001A  6A 00	   *	    push   +000000000h
+ 0000001C  E8 00000000 E   *	    call   ExitProcess
+ 00000021			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    10/23/23 00:40:58
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    11/06/23 19:00:48
 assemb_sec.asm						     Symbols 2 - 1
 
 
@@ -132,8 +137,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001A Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000B Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000021 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -240,7 +245,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001A Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000021 Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -474,6 +479,7 @@ lightMagenta . . . . . . . . . .	Number	 0000000Dh
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+resultMsg  . . . . . . . . . . .	Byte	 00000000 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
