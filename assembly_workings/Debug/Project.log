@@ -1,2 +1,2 @@
-﻿  LINK : E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe not found or not built by the last incremental link; performing full link
-  Project.vcxproj -> E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe
+﻿  Assembling assemb_sec.asm...
+LINK : fatal error LNK1104: cannot open file 'E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe'
