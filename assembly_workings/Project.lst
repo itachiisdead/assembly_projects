@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    12/11/23 12:39:23
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    12/16/23 15:37:43
 assemb_sec.asm						     Page 1 - 1
 
 
-				INCLUDE Irvine32.inc
+				include irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
 			      C ;OPTION CASEMAP:NONE		; optional: make identifiers case-sensitive
@@ -21,98 +21,29 @@ assemb_sec.asm						     Page 1 - 1
 			      C .LIST
 			      C 
  00000000			.data
- 00000000 00000001		array DWORD 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-	   00000002
-	   00000003
-	   00000004
-	   00000005
-	   00000006
-	   00000007
-	   00000008
-	   00000009
-	   0000000A
- 00000028 0000000A		arraySize DWORD 10
+ 00000000 52 65 73 75 6C	    resultMsg db "Result %d", 0
+	   74 20 25 64 00
 
  00000000			.code
- 00000000			main PROC
- 00000000  B9 00000000		    mov ecx, 0                   
- 00000005  8B 3D 00000027 R	    mov edi, arraySize - 1      
+ 00000000			main proc
+				    ; Calculate the equation
+ 00000000  B8 0000003C		    mov eax, 60    ; eax = 60
+ 00000005  83 E8 14		    sub eax, 20    ; eax = eax - 20
+ 00000008  83 C0 05		    add eax, 5     ; eax = eax + 5
+ 0000000B  83 C0 04		    add eax, 4     ; eax = eax + 4
 
- 0000000B			reverseAndAddLoop:
- 0000000B  3B 0D 00000028 R	    cmp ecx, arraySize           ; Compare loop counter with array size
- 00000011  EB 28		    jmp printResult              ; If greater or equal, exit the loop
+				    ; Display the result
+ 0000000E  8B D0		    mov edx, eax
+ 00000010  BB 00000000 R	    mov ebx, OFFSET resultMsg
+ 00000015  E8 00000000 E	    call WriteInt
 
-				    ; Reverse the array in place
- 00000013  8B 04 8D		    mov eax, [array + ecx * 4]  ; Load the current element
-	   00000000 R
- 0000001A  8B 1C BD		    mov ebx, [array + edi * 4]  ; Load the element at the opposite end
-	   00000000 R
- 00000021  89 1C 8D		    mov [array + ecx * 4], ebx  ; Store the element at the current position
-	   00000000 R
- 00000028  89 04 BD		    mov [array + edi * 4], eax  ; Store the current element at the opposite end
-	   00000000 R
-
-				    ; Add 2 to each element
- 0000002F  83 04 8D		    add [array + ecx * 4], 2     ; Add 2 to the current element
-	   00000000 R 02
-
- 00000037  41			    inc ecx                      ; Increment loop counter
- 00000038  4F			    dec edi                      ; Decrement destination index
- 00000039  EB D0		    jmp reverseAndAddLoop        ; Repeat the loop
-
- 0000003B			printResult:
-
- 0000003B  B9 00000000		    mov ecx, 0                   ; Reset loop counter
- 00000040			printLoop:
- 00000040  3B 0D 00000028 R	    cmp ecx, arraySize           ; Compare loop counter with array size
- 00000046  EB 14		    jmp endProgram               ; If greater or equal, exit the loop
-
- 00000048  8B 04 8D		    mov eax, [array + ecx * 4]  ; Load the current element
-	   00000000 R
- 0000004F  E8 00000000 E	    call WriteInt                ; Print the integer
- 00000054  E8 00000000 E	    call Crlf                    ; Move to the next line
-
- 00000059  41			    inc ecx                      ; Increment loop counter
- 0000005A  EB E4		    jmp printLoop                ; Repeat the loop
-
- 0000005C			endProgram:
-				               ; Wait for user input before exiting
 				    exit
- 0000005C  6A 00	   *	    push   +000000000h
- 0000005E  E8 00000000 E   *	    call   ExitProcess
- 00000063			main ENDP
-				END main
+ 0000001A  6A 00	   *	    push   +000000000h
+ 0000001C  E8 00000000 E   *	    call   ExitProcess
+ 00000021			main endp
+				end main
 
-
-
-
-
-
-
-
-
-
-				;include irvine32.inc
-				;.data
-				;    resultMsg db "Result %d", 0
-				;
-				;.code
-				;main proc
-				;    ; Calculate the equation
-				;    mov eax, 60    ; eax = 60
-				;    sub eax, 20    ; eax = eax - 20
-				;    add eax, 5     ; eax = eax + 5
-				;    add eax, 4     ; eax = eax + 4
-				;
-				;    ; Display the result
-				;    mov edx, eax
-				;    mov ebx, OFFSET resultMsg
-				;    call WriteInt
-				;
-				;    exit
-				;main endp
-				;end main
-Microsoft (R) Macro Assembler Version 14.37.32824.0	    12/11/23 12:39:23
+Microsoft (R) Macro Assembler Version 14.37.32824.0	    12/16/23 15:37:43
 assemb_sec.asm						     Symbols 2 - 1
 
 
@@ -206,8 +137,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000002C Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000063 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000A Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000021 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -314,11 +245,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000063 Public STDCALL
-  reverseAndAddLoop  . . . . . .	L Near	 0000000B _TEXT	
-  printResult  . . . . . . . . .	L Near	 0000003B _TEXT	
-  printLoop  . . . . . . . . . .	L Near	 00000040 _TEXT	
-  endProgram . . . . . . . . . .	L Near	 0000005C _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000021 Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -537,8 +464,6 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
-arraySize  . . . . . . . . . . .	DWord	 00000028 _DATA	
-array  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
@@ -554,6 +479,7 @@ lightMagenta . . . . . . . . . .	Number	 0000000Dh
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+resultMsg  . . . . . . . . . . .	Byte	 00000000 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

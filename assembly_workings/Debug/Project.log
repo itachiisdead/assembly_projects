@@ -1,2 +1,1 @@
-﻿  Assembling assemb_sec.asm...
-LINK : fatal error LNK1104: cannot open file 'E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe'
+﻿LINK : fatal error LNK1104: cannot open file 'E:\my_projects\vs code learn\assemb_working\assembly_workings\Debug\Project.exe'
